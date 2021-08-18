@@ -50,27 +50,27 @@ const gqlAgent = (query, variables) =>
 
 describe('integration tests', () => {
     it('returns all entities by default', () =>
-        gqlAgent('{ allPosts { id } }').expect({
+        gqlAgent('{ posts { id } }').expect({
             data: {
-                allPosts: [{ id: '1' }, { id: '2' }, { id: '3' }],
+                posts: [{ id: '1' }, { id: '2' }, { id: '3' }],
             },
         }));
     it('filters by string using the q filter in a case-insensitive way', () =>
-        gqlAgent('{ allPosts(filter: { q: "lorem" }) { id } }').expect({
+        gqlAgent('{ posts(filter: { q: "lorem" }) { id } }').expect({
             data: {
-                allPosts: [{ id: '1' }],
+                posts: [{ id: '1' }],
             },
         }));
     it('gets an entity by id', () =>
-        gqlAgent('{ Post(id: 1) { id } }').expect({
+        gqlAgent('{ post(id: 1) { id } }').expect({
             data: {
-                Post: { id: '1' },
+                post: { id: '1' },
             },
         }));
     it('gets all the entity fields', () =>
-        gqlAgent('{ Post(id: 1) { id title views user_id } }').expect({
+        gqlAgent('{ post(id: 1) { id title views user_id } }').expect({
             data: {
-                Post: {
+                post: {
                     id: '1',
                     title: 'Lorem Ipsum',
                     views: 254,
@@ -79,20 +79,20 @@ describe('integration tests', () => {
             },
         }));
     it('throws an error when asked for a non existent field', () =>
-        gqlAgent('{ Post(id: 1) { foo } }').expect({
+        gqlAgent('{ post(id: 1) { foo } }').expect({
             errors: [
                 {
-                    message: 'Cannot query field "foo" on type "Post".',
+                    message: 'Cannot query field "foo" on type "post".',
                     locations: [{ line: 1, column: 17 }],
                 },
             ],
         }));
     it('gets relationship fields', () =>
-        gqlAgent('{ Post(id: 1) { User { name } Comments { body }} }').expect({
+        gqlAgent('{ post(id: 1) { user { name } comments { body }} }').expect({
             data: {
-                Post: {
-                    User: { name: 'John Doe' },
-                    Comments: [
+                post: {
+                    user: { name: 'John Doe' },
+                    comments: [
                         { body: 'Consectetur adipiscing elit' },
                         { body: 'Nam molestie pellentesque dui' },
                     ],
@@ -101,14 +101,14 @@ describe('integration tests', () => {
         }));
     it('allows multiple mutations', () =>
         gqlAgent(
-            'mutation{ updatePost(id:"2", title:"Foo bar", views: 200, user_id:"123") { id } }'
+            'mutation{ postUpdate(id:"2", title:"Foo bar", views: 200, user_id:"123") { id } }'
         )
             .then(() =>
                 gqlAgent(
-                    'mutation{ updatePost(id:"2", title:"Foo bar", views: 200, user_id:"123") { id } }'
+                    'mutation{ postUpdate(id:"2", title:"Foo bar", views: 200, user_id:"123") { id } }'
                 )
             )
             .then((res) =>
-                expect(res.body).toEqual({ data: { updatePost: { id: '2' } } })
+                expect(res.body).toEqual({ data: { postUpdate: { id: '2' } } })
             ));
 });

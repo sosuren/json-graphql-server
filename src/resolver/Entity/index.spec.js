@@ -21,21 +21,21 @@ const data = {
 };
 
 test('provides many to one relationship reolvers', () => {
-    const { User } = entity('posts', data);
-    expect(User(data.posts[0])).toEqual({ id: 123, name: 'John Doe' });
-    expect(User(data.posts[1])).toEqual({ id: 456, name: 'Jane Doe' });
-    const { Post } = entity('comments', data);
-    expect(Post(data.comments[0])).toEqual({
+    const { user } = entity('posts', data);
+    expect(user(data.posts[0])).toEqual({ id: 123, name: 'John Doe' });
+    expect(user(data.posts[1])).toEqual({ id: 456, name: 'Jane Doe' });
+    const { post } = entity('comments', data);
+    expect(post(data.comments[0])).toEqual({
         id: 1,
         title: 'Lorem Ipsum',
         user_id: 123,
     });
-    expect(Post(data.comments[1])).toEqual({
+    expect(post(data.comments[1])).toEqual({
         id: 1,
         title: 'Lorem Ipsum',
         user_id: 123,
     });
-    expect(Post(data.comments[2])).toEqual({
+    expect(post(data.comments[2])).toEqual({
         id: 2,
         title: 'Ut enim ad minim',
         user_id: 456,
@@ -43,21 +43,21 @@ test('provides many to one relationship reolvers', () => {
 });
 
 test('provides one to many relationship reolvers', () => {
-    const { Comments } = entity('posts', data);
-    expect(Comments(data.posts[0])).toEqual([
+    const { comments } = entity('posts', data);
+    expect(comments(data.posts[0])).toEqual([
         { id: 987, post_id: 1, body: 'Consectetur adipiscing elit' },
         { id: 995, post_id: 1, body: 'Nam molestie pellentesque dui' },
     ]);
-    expect(Comments(data.posts[1])).toEqual([
+    expect(comments(data.posts[1])).toEqual([
         { id: 998, post_id: 2, body: 'Sunt in culpa qui officia' },
     ]);
-    expect(Comments(data.posts[2])).toEqual([]);
-    const { Posts } = entity('users', data);
-    expect(Posts(data.users[0])).toEqual([
+    expect(comments(data.posts[2])).toEqual([]);
+    const { posts } = entity('users', data);
+    expect(posts(data.users[0])).toEqual([
         { id: 1, title: 'Lorem Ipsum', user_id: 123 },
         { id: 3, title: 'Sic Dolor amet', user_id: 123 },
     ]);
-    expect(Posts(data.users[1])).toEqual([
+    expect(posts(data.users[1])).toEqual([
         { id: 2, title: 'Ut enim ad minim', user_id: 456 },
     ]);
 });

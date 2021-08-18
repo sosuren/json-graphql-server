@@ -157,11 +157,11 @@ export default (data) => {
                 fields: inputFields,
             });
 
-            fields[`create${type.name}`] = {
+            fields[`${type.name}Create`] = {
                 type: typesByName[type.name],
                 args: createFields,
             };
-            fields[`createMany${type.name}`] = {
+            fields[`${type.name}CreateMany`] = {
                 type: new GraphQLList(typesByName[type.name]),
                 args: {
                     data: {
@@ -169,11 +169,11 @@ export default (data) => {
                     },
                 },
             };
-            fields[`update${type.name}`] = {
+            fields[`${type.name}Update`] = {
                 type: typesByName[type.name],
                 args: nullableTypeFields,
             };
-            fields[`remove${type.name}`] = {
+            fields[`${type.name}Remove`] = {
                 type: typesByName[type.name],
                 args: {
                     id: { type: new GraphQLNonNull(GraphQLID) },

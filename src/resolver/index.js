@@ -20,10 +20,10 @@ const getQueryResolvers = (entityName, data) => ({
 });
 
 const getMutationResolvers = (entityName, data) => ({
-    [`create${entityName}`]: create(data),
-    [`createMany${entityName}`]: createMany(data),
-    [`update${entityName}`]: update(data),
-    [`remove${entityName}`]: remove(data),
+    [`${entityName}Create`]: create(data),
+    [`${entityName}CreateMany`]: createMany(data),
+    [`${entityName}Update`]: update(data),
+    [`${entityName}Remove`]: remove(data),
 });
 
 export default (data) => {

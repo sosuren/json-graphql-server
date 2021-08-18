@@ -35,7 +35,7 @@ test('Integration test', () => {
         ],
     };
     const PostType = new GraphQLObjectType({
-        name: 'Post',
+        name: 'post',
         fields: {
             id: { type: new GraphQLNonNull(GraphQLID) },
             title: { type: new GraphQLNonNull(GraphQLString) },
@@ -44,14 +44,14 @@ test('Integration test', () => {
         },
     });
     const UsersType = new GraphQLObjectType({
-        name: 'User',
+        name: 'user',
         fields: {
             id: { type: new GraphQLNonNull(GraphQLID) },
             name: { type: new GraphQLNonNull(GraphQLString) },
         },
     });
     const types = getTypesFromData(data);
-    expect(types.map((t) => t.toString())).toEqual(['Post', 'User']);
+    expect(types.map((t) => t.toString())).toEqual(['post', 'user']);
     expect(types.map((t) => t.getFields())).toEqual([
         PostType.getFields(),
         UsersType.getFields(),
