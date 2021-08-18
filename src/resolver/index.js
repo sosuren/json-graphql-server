@@ -14,8 +14,8 @@ import DateType from '../introspection/DateType';
 import hasType from '../introspection/hasType';
 
 const getQueryResolvers = (entityName, data) => ({
-    [`all${pluralize(entityName)}`]: all(data),
-    [`_all${pluralize(entityName)}Meta`]: meta(data),
+    [`${pluralize(entityName)}`]: all(data),
+    [`_${pluralize(entityName)}Meta`]: meta(data),
     [entityName]: single(data),
 });
 

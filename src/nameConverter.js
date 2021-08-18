@@ -26,14 +26,14 @@ import { camelize, pluralize, singularize } from 'inflection';
  * @param {String} fieldName 'users'
  * @return {String} 'Users'
  */
-export const getRelationshipFromKey = (key) => camelize(key);
+export const getRelationshipFromKey = (key) => camelize(key, true);
 
 /**
  *
  * @param {String} fieldName 'users'
  * @return {String} 'User'
  */
-export const getTypeFromKey = (key) => camelize(singularize(key));
+export const getTypeFromKey = (key) => camelize(singularize(key), true);
 
 /**
  *
